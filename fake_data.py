@@ -31,7 +31,6 @@ products = []
 for i in range(10):  # Creating 10 products
     product = Product.objects.create(
         name=f"Product {i+1}",
-        code=f"P-{1000 + i}",
         group=random.choice(group_objs),
         measurement=random.choice(measurement_objs),
         market=random.choice(market_objs)

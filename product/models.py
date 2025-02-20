@@ -1,6 +1,7 @@
+import random
+import string
 from django.db import models
 
-import product
 from utils.models import CreateUpdateTracker
 
 
@@ -14,7 +15,7 @@ class ProductGroup(models.Model):
 
 class Product(CreateUpdateTracker):
     name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255)
+    code = models.CharField(max_length=255, unique=True)
     group = models.ForeignKey(
         ProductGroup, on_delete=models.PROTECT, related_name="products"
     )
@@ -24,6 +25,20 @@ class Product(CreateUpdateTracker):
     market = models.ForeignKey(
         "market.Market", on_delete=models.PROTECT, related_name="stock_products"
     )
+    
+    @classmethod
+    def generate_unique_code(cls):
+        while True:
+            letters = ''.join(random.choices(string.ascii_uppercase, k=2))
+            digits = ''.join(random.choices(string.digits, k=5))
+            code = f"{letters}{digits}"
+            if not cls.objects.filter(code=code).exists():
+                return code
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = self.generate_unique_code()
+        super().save(*args, **kwargs)
 
 
 class StockProduct(CreateUpdateTracker):

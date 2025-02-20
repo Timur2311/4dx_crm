@@ -2,11 +2,16 @@ from rest_framework.generics import ListAPIView
 from .models import Product, StockProduct
 from .serializers import ProductSerializer
 from django.db.models import Prefetch, Sum
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 class ProductListView(ListAPIView):
     serializer_class = ProductSerializer
-
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['market', 'group']
+    search_fields = ['name', 'code']
+    
     def get_queryset(self):
 
         return (
