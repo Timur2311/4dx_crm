@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
+from market.models import Market
+from market.serializers import MarketSerializer
 
-# Create your views here.
+class MarketListAPIView(ListAPIView):
+    queryset = Market.objects.all()
+    serializer_class = MarketSerializer
