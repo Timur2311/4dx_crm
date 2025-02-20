@@ -50,8 +50,15 @@ python manage.py createsuperuser
 ```
 
 ---
+### 4️⃣ Generate Fake Data
+To populate the database with fake data, run the following script:
 
-### 4️⃣ Run the Development Server
+```bash
+python fake_data.py
+```
+
+
+### 5️⃣ Run the Development Server
 Start the Django development server:
 
 ```bash
@@ -71,4 +78,8 @@ You can access the API documentation at:
 🔗 **ReDoc UI (if enabled):** [http://127.0.0.1:8000/redoc/](http://127.0.0.1:8000/redoc/)
 
 ---
+
+
+
+
 
